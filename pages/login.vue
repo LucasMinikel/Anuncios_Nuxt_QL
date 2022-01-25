@@ -66,8 +66,12 @@ export default {
     },
     methods: {
         login() {
-            this.$auth.loginWith("local", {
-                data: this.form,
+            this.$axios.$get("/sanctum/csrf-cookie").then((res) => {
+                try {
+                    this.$auth.loginWith("laravelSanctum", {
+                        data: this.form,
+                    });
+                } catch (error) {}
             });
         },
     },

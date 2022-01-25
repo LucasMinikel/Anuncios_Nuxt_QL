@@ -4,20 +4,30 @@
             >Anúncios</nuxt-link
         >
         <div class="-mx-4 flex items-center flex-wrap">
-            <span class="mx-4 font-bold">Alex</span>
-            <nuxt-link
-                :to="{ name: 'login' }"
-                class="mx-4"
-                exact-active-class="text-blue-500"
-                >Entrar</nuxt-link
-            >
-            <a href="" class="mx-4" exact-active-class="text-blue-500">Sair</a>
-            <a href="" class="mx-4" exact-active-class="text-blue-500"
-                >Gerenciador</a
-            >
-            <a href="" class="mx-4" exact-active-class="text-blue-500"
-                >Criar anúncio</a
-            >
+            <template v-if="$auth.loggedIn">
+                <div>
+                    <span class="mx-4 font-bold">{{ $auth.user.name }}</span>
+                    <a href="" class="mx-4" exact-active-class="text-blue-500"
+                        >Criar anúncio</a
+                    >
+                    <a href="" class="mx-4" exact-active-class="text-blue-500"
+                        >Gerenciador</a
+                    >
+                    <a href="" class="mx-4" exact-active-class="text-blue-500"
+                        >Sair</a
+                    >
+                </div>
+            </template>
+            <template v-if="!$auth.loggedIn">
+                <div>
+                    <nuxt-link
+                        :to="{ name: 'login' }"
+                        class="mx-4"
+                        exact-active-class="text-blue-500"
+                        >Entrar</nuxt-link
+                    >
+                </div>
+            </template>
         </div>
     </header>
 </template>
