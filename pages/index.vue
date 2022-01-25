@@ -14,11 +14,11 @@
 </template>
 
 <script>
-import ALL_TAGS from "@/graphql/AllAnuncios.gql";
+import ALL_ANUNCIOS from "@/graphql/AllAnuncios.gql";
 export default {
     apollo: {
         anuncios: {
-            query: ALL_TAGS,
+            query: ALL_ANUNCIOS,
             fetchPolicy: "network-only",
         },
     },

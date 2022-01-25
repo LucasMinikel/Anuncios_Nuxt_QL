@@ -54,8 +54,8 @@
                 </div>
             </div>
             <div class="w-full md:w-3/12 mb-2">
-                <a
-                    href=""
+                <nuxt-link
+                    :to="{ name: 'tags-slug', params: { slug: tag.slug } }"
                     v-for="tag in anuncio.tags"
                     :key="tag.slug"
                     class="
@@ -69,7 +69,7 @@
                         mt-1
                         bg-white
                     "
-                    >{{ tag.titulo }}</a
+                    >{{ tag.titulo }}</nuxt-link
                 >
             </div>
             <div class="mb-2">
