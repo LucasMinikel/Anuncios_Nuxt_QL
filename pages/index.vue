@@ -6,10 +6,27 @@
             </h1>
             <p class="text-gray-600 font-medium">Para você</p>
         </div>
-        <div>Lista de anuncios</div>
+        <div class="mt-10">
+            {{ anuncios }}
+        </div>
     </div>
 </template>
 
 <script>
-export default {};
+import gql from "graphql-tag";
+export default {
+    apollo: {
+        anuncios: {
+            query: gql`
+                {
+                    anuncios(orderBy: [{ column: CREATED_AT, order: DESC }]) {
+                        id
+                        anuncio_titulo
+                    }
+                }
+            `,
+            fetchPolicy: "network-only",
+        },
+    },
+};
 </script>
