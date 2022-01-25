@@ -7,7 +7,11 @@
             <p class="text-gray-600 font-medium">Para você</p>
         </div>
         <div class="mt-10">
-            {{ anuncios }}
+            <anuncio
+                v-for="anuncio in anuncios"
+                :key="anuncio.id"
+                :anuncio="anuncio"
+            />
         </div>
     </div>
 </template>
@@ -22,6 +26,14 @@ export default {
                     anuncios(orderBy: [{ column: CREATED_AT, order: DESC }]) {
                         id
                         anuncio_titulo
+                        anuncio_local
+                        anuncio_link
+                        anuncio_empresa
+                        anuncio_logo
+                        tags {
+                            titulo
+                            slug
+                        }
                     }
                 }
             `,
