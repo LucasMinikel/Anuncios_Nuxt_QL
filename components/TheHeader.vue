@@ -13,7 +13,11 @@
                     <a href="" class="mx-4" exact-active-class="text-blue-500"
                         >Gerenciador</a
                     >
-                    <a href="" class="mx-4" exact-active-class="text-blue-500"
+                    <a
+                        href=""
+                        class="mx-4"
+                        exact-active-class="text-blue-500"
+                        @click.prevent="logout"
                         >Sair</a
                     >
                 </div>
@@ -31,3 +35,13 @@
         </div>
     </header>
 </template>
+<script>
+export default {
+    methods: {
+        async logout() {
+            await this.$auth.logout();
+            this.$router.replace({ name: "index" });
+        },
+    },
+};
+</script>
