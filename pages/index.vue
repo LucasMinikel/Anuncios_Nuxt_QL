@@ -14,33 +14,11 @@
 </template>
 
 <script>
-import gql from "graphql-tag";
+import ALL_TAGS from "@/graphql/AllAnuncios.gql";
 export default {
     apollo: {
         anuncios: {
-            query: gql`
-                {
-                    anuncios(
-                        orderBy: [
-                            { column: CREATED_AT, order: DESC }
-                            { column: ANUNCIO_FAVORITO, order: DESC }
-                        ]
-                    ) {
-                        id
-                        anuncio_titulo
-                        anuncio_local
-                        anuncio_link
-                        anuncio_empresa
-                        anuncio_logo
-                        anuncio_marcado
-                        anuncio_favorito
-                        tags {
-                            titulo
-                            slug
-                        }
-                    }
-                }
-            `,
+            query: ALL_TAGS,
             fetchPolicy: "network-only",
         },
     },
