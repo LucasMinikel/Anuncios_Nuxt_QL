@@ -10,8 +10,11 @@
                     <a href="" class="mx-4" exact-active-class="text-blue-500"
                         >Criar anúncio</a
                     >
-                    <a href="" class="mx-4" exact-active-class="text-blue-500"
-                        >Gerenciador</a
+                    <nuxt-link
+                        :to="{ name: 'user-anuncios' }"
+                        class="mx-4"
+                        exact-active-class="text-blue-500"
+                        >Meus anúncios</nuxt-link
                     >
                     <a
                         href=""
