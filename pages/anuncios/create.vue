@@ -22,7 +22,14 @@
                     "
                     placeholder="Meu anúncio"
                     v-model="form.anuncio_titulo"
+                    :class="{ 'border-red-500': erros['input.anuncio_titulo'] }"
                 />
+                <div
+                    class="text-sm text-red-500 mt-1"
+                    v-if="erros['input.anuncio_titulo']"
+                >
+                    {{ erros["input.anuncio_titulo"][0] }}
+                </div>
             </div>
             <div class="mb-4">
                 <label for="anuncio_local" class="inline-block mb-1 font-medium"
@@ -42,7 +49,14 @@
                     "
                     placeholder="Rua tal"
                     v-model="form.anuncio_local"
+                    :class="{ 'border-red-500': erros['input.anuncio_local'] }"
                 />
+                <div
+                    class="text-sm text-red-500 mt-1"
+                    v-if="erros['input.anuncio_local']"
+                >
+                    {{ erros["input.anuncio_local"][0] }}
+                </div>
             </div>
             <div class="mb-4">
                 <label for="anuncio_link" class="inline-block mb-1 font-medium"
@@ -62,7 +76,14 @@
                     "
                     placeholder="Link do meu anúncio"
                     v-model="form.anuncio_link"
+                    :class="{ 'border-red-500': erros['input.anuncio_link'] }"
                 />
+                <div
+                    class="text-sm text-red-500 mt-1"
+                    v-if="erros['input.anuncio_link']"
+                >
+                    {{ erros["input.anuncio_link"][0] }}
+                </div>
             </div>
             <div class="mb-4">
                 <label for="tags" class="inline-block mb-1 font-medium"
@@ -75,7 +96,15 @@
                     :reduce="(tag) => tag.id"
                     multiple
                     v-model="form.tags"
+                    class="border-2 border-gray-200 rounded-lg"
+                    :class="{ 'border-red-500': erros['input.tags.connect'] }"
                 ></v-select>
+                <div
+                    class="text-sm text-red-500 mt-1"
+                    v-if="erros['input.tags.connect']"
+                >
+                    {{ erros["input.tags.connect"][0] }}
+                </div>
             </div>
             <div class="mb-4">
                 <label
@@ -97,7 +126,16 @@
                     "
                     placeholder="Minha empresa"
                     v-model="form.anuncio_empresa"
+                    :class="{
+                        'border-red-500': erros['input.anuncio_empresa'],
+                    }"
                 />
+                <div
+                    class="text-sm text-red-500 mt-1"
+                    v-if="erros['input.anuncio_empresa']"
+                >
+                    {{ erros["input.anuncio_empresa"][0] }}
+                </div>
             </div>
             <div class="mb-4">
                 <label for="anuncio_logo" class="inline-block mb-1 font-medium"
@@ -117,7 +155,14 @@
                     "
                     placeholder="Minha empresa"
                     v-model="form.anuncio_logo"
+                    :class="{ 'border-red-500': erros['input.anuncio_logo'] }"
                 />
+                <div
+                    class="text-sm text-red-500 mt-1"
+                    v-if="erros['input.anuncio_logo']"
+                >
+                    {{ erros["input.anuncio_logo"][0] }}
+                </div>
             </div>
 
             <div class="mb-4">
@@ -142,7 +187,7 @@
                 type="submit"
                 class="p-4 bg-blue-500 text-white font-medium rounded-lg"
             >
-                Entrar
+                Criar
             </button>
         </form>
     </div>
@@ -154,6 +199,7 @@ import CREATE_ANUNCIO from "@/graphql/CreateAnuncio.gql";
 export default {
     data() {
         return {
+            erros: {},
             form: {
                 anuncio_titulo: "",
                 anuncio_local: "",
@@ -180,6 +226,9 @@ export default {
                 })
                 .then(() => {
                     this.$router.replace({ name: "user-anuncios" });
+                })
+                .catch((errors) => {
+                    this.erros = errors.graphQLErrors[0].extensions.validation;
                 });
         },
         submit() {
