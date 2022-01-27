@@ -1,0 +1,25 @@
+mutation CreateAnuncio(
+    $anuncio_titulo: String,
+    $anuncio_local: String,
+    $anuncio_link: String,
+    $anuncio_empresa: String,
+    $anuncio_logo: String,
+    $anuncio_marcado: Boolean,
+    $anuncio_favorito: Boolean,
+    $tags: [ID!]){
+    createAnuncio(input: {
+        anuncio_titulo: $anuncio_titulo
+        anuncio_local:$anuncio_local
+        anuncio_link: $anuncio_link
+        anuncio_empresa:$anuncio_empresa
+        anuncio_logo: $anuncio_logo
+        anuncio_marcado: $anuncio_marcado
+        anuncio_favorito: $anuncio_favorito
+        tags:{
+            connect:$tags
+        }
+    }){
+        id
+    }
+}
+

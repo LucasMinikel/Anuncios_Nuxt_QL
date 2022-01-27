@@ -7,8 +7,11 @@
             <template v-if="$auth.loggedIn">
                 <div>
                     <span class="mx-4 font-bold">{{ $auth.user.name }}</span>
-                    <a href="" class="mx-4" exact-active-class="text-blue-500"
-                        >Criar anúncio</a
+                    <nuxt-link
+                        :to="{ name: 'anuncios-create' }"
+                        class="mx-4"
+                        exact-active-class="text-blue-500"
+                        >Criar anúncio</nuxt-link
                     >
                     <nuxt-link
                         :to="{ name: 'user-anuncios' }"
@@ -26,6 +29,14 @@
                 </div>
             </template>
             <template v-if="!$auth.loggedIn">
+                <div>
+                    <nuxt-link
+                        :to="{ name: 'register' }"
+                        class="mx-4"
+                        exact-active-class="text-blue-500"
+                        >Criar Conta</nuxt-link
+                    >
+                </div>
                 <div>
                     <nuxt-link
                         :to="{ name: 'login' }"

@@ -1,7 +1,7 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'anuncios-nuxt',
+    title: 'Anúncios',
     htmlAttrs: {
       lang: 'en'
     },
@@ -22,6 +22,7 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
+    './plugins/vue-select.js'
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

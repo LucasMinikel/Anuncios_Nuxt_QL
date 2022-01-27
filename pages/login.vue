@@ -1,6 +1,6 @@
 <template>
     <div class="mt-10 flex justify-center">
-        <form action="" class="w-4/12" @submit.prevent="login">
+        <form action="" class="w-6/12" @submit.prevent="login">
             <h2 class="mb-4 text-2xl font-bold">Entrar</h2>
             <div class="mb-4">
                 <label for="email" class="inline-block mb-1 font-medium"

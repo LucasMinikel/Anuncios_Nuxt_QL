@@ -1,8 +1,8 @@
 {
     anuncios(
         orderBy: [
-            { column: CREATED_AT, order: DESC }
             { column: ANUNCIO_FAVORITO, order: DESC }
+            { column: CREATED_AT, order: DESC }
         ]
     ) {
         id
