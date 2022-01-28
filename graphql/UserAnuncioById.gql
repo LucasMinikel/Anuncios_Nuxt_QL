@@ -1,0 +1,19 @@
+query UserAnuncioById($id: ID!){
+    me{
+        anuncios(id: $id){
+        id
+        anuncio_titulo
+        anuncio_local
+        anuncio_link
+        anuncio_empresa
+        anuncio_logo
+        anuncio_marcado
+        anuncio_favorito
+        tags {
+            id
+            titulo
+            slug
+            }
+        }
+        }
+    }

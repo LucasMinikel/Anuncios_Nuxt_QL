@@ -1,7 +1,7 @@
 <template>
     <div class="mt-10 flex justify-center">
-        <form action="" class="w-6/12" @submit.prevent="submit">
-            <h2 class="mb-4 text-2xl font-bold">Criar anúncio</h2>
+        <form action="" class="w-6/12" v-if="me" @submit.prevent="submit">
+            <h2 class="mb-4 text-2xl font-bold">Editar anúncio</h2>
             <div class="mb-4">
                 <label
                     for="anuncio_titulo"
@@ -21,7 +21,7 @@
                         px-4
                     "
                     placeholder="Meu anúncio"
-                    v-model="form.anuncio_titulo"
+                    v-model="me.anuncios[0].anuncio_titulo"
                     :class="{ 'border-red-500': erros['input.anuncio_titulo'] }"
                 />
                 <div
@@ -48,7 +48,7 @@
                         px-4
                     "
                     placeholder="Rua tal"
-                    v-model="form.anuncio_local"
+                    v-model="me.anuncios[0].anuncio_local"
                     :class="{ 'border-red-500': erros['input.anuncio_local'] }"
                 />
                 <div
@@ -75,7 +75,7 @@
                         px-4
                     "
                     placeholder="Link do meu anúncio"
-                    v-model="form.anuncio_link"
+                    v-model="me.anuncios[0].anuncio_link"
                     :class="{ 'border-red-500': erros['input.anuncio_link'] }"
                 />
                 <div
@@ -93,17 +93,16 @@
                     inputId="tags"
                     :options="tags"
                     label="titulo"
-                    :reduce="(tag) => tag.id"
                     multiple
-                    v-model="form.tags"
+                    v-model="me.anuncios[0].tags"
                     class="border-2 border-gray-200 rounded-lg bg-gray-200"
-                    :class="{ 'border-red-500': erros['input.tags.connect'] }"
+                    :class="{ 'border-red-500': erros['input.tags.sync'] }"
                 ></v-select>
                 <div
                     class="text-sm text-red-500 mt-1"
-                    v-if="erros['input.tags.connect']"
+                    v-if="erros['input.tags.sync']"
                 >
-                    {{ erros["input.tags.connect"][0] }}
+                    {{ erros["input.tags.sync"][0] }}
                 </div>
             </div>
             <div class="mb-4">
@@ -125,7 +124,7 @@
                         px-4
                     "
                     placeholder="Minha empresa"
-                    v-model="form.anuncio_empresa"
+                    v-model="me.anuncios[0].anuncio_empresa"
                     :class="{
                         'border-red-500': erros['input.anuncio_empresa'],
                     }"
@@ -154,7 +153,7 @@
                         px-4
                     "
                     placeholder="Minha empresa"
-                    v-model="form.anuncio_logo"
+                    v-model="me.anuncios[0].anuncio_logo"
                     :class="{ 'border-red-500': erros['input.anuncio_logo'] }"
                 />
                 <div
@@ -171,7 +170,7 @@
                     name="anuncio_marcado"
                     id="anuncio_marcado"
                     class="mr-2"
-                    v-model="form.anuncio_marcado"
+                    v-model="me.anuncios[0].anuncio_marcado"
                 /><label for="anuncio_marcado">Marcado</label>
             </div>
             <div class="mb-4">
@@ -180,49 +179,55 @@
                     name="anuncio_favorito"
                     id="anuncio_favorito"
                     class="mr-2"
-                    v-model="form.anuncio_favorito"
+                    v-model="me.anuncios[0].anuncio_favorito"
                 /><label for="anuncio_favorito">Favorito</label>
             </div>
             <button
                 type="submit"
                 class="p-4 bg-blue-500 text-white font-medium rounded-lg"
             >
-                Criar
+                Salvar
             </button>
         </form>
     </div>
 </template>
 
+
 <script>
+import USER_ANUNCIO_BY_ID from "@/graphql/UserAnuncioById.gql";
 import ALL_TAGS from "@/graphql/AllTags.gql";
-import CREATE_ANUNCIO from "@/graphql/CreateAnuncio.gql";
+import UPDATE_ANUNCIO from "@/graphql/UpdateAnuncio.gql";
 export default {
     data() {
         return {
             erros: {},
-            form: {
-                anuncio_titulo: "",
-                anuncio_local: "",
-                anuncio_link: "",
-                anuncio_empresa: "",
-                anuncio_logo: "",
-                anuncio_marcado: false,
-                anuncio_favorito: false,
-                tags: [],
-            },
         };
     },
+    computed: {
+        tagsIds() {
+            return this.me.anuncios[0].tags.map((t) => t.id);
+        },
+    },
     apollo: {
+        me: {
+            prefetch: false,
+            query: USER_ANUNCIO_BY_ID,
+            variables() {
+                return {
+                    id: this.$route.params.id,
+                };
+            },
+        },
         tags: {
             query: ALL_TAGS,
         },
     },
     methods: {
-        createAnuncio() {
+        submit() {
             this.$apollo
                 .mutate({
-                    mutation: CREATE_ANUNCIO,
-                    variables: this.form,
+                    mutation: UPDATE_ANUNCIO,
+                    variables: { ...this.me.anuncios[0], tags: this.tagsIds },
                 })
                 .then(() => {
                     this.$router.replace({ name: "user-anuncios" });
@@ -230,9 +235,6 @@ export default {
                 .catch((errors) => {
                     this.erros = errors.graphQLErrors[0].extensions.validation;
                 });
-        },
-        submit() {
-            this.createAnuncio();
         },
     },
 };

@@ -73,30 +73,32 @@
                 >
             </div>
             <div class="mb-2">
-                <div
-                    class="
-                        opacity-100
-                        md:opacity-0
-                        group-hover:opacity-100
-                        transition-opacity
-                        duration-200
-                    "
-                >
-                    <a
-                        :href="anuncio.anuncio_link"
+                <slot name="actions">
+                    <div
                         class="
-                            inline-block
-                            border-2 border-blue-400
-                            text-blue-400
-                            font-bold
-                            rounded-lg
-                            px-3
-                            py-2
-                            bg-white
+                            opacity-100
+                            md:opacity-0
+                            group-hover:opacity-100
+                            transition-opacity
+                            duration-200
                         "
-                        >Visitar anúncio</a
                     >
-                </div>
+                        <a
+                            :href="anuncio.anuncio_link"
+                            class="
+                                inline-block
+                                border-2 border-blue-400
+                                text-blue-400
+                                font-bold
+                                rounded-lg
+                                px-3
+                                py-2
+                                bg-white
+                            "
+                            >Visitar anúncio</a
+                        >
+                    </div>
+                </slot>
             </div>
         </div>
     </div>

@@ -8,7 +8,18 @@
                 v-for="anuncio in me.anuncios"
                 :key="anuncio.id"
                 :anuncio="anuncio"
-            />
+            >
+                <template slot="actions">
+                    <nuxt-link
+                        :to="{
+                            name: 'anuncios-id-edit',
+                            params: { id: anuncio.id },
+                        }"
+                        class="font-medium text-blue-500"
+                        >Editar</nuxt-link
+                    >
+                </template>
+            </anuncio>
         </div>
     </div>
 </template>
